@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Heatwaves: Causes, Impacts & Prevention</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #e74c3c;
+            --secondary: #3498db;
+            --dark: #2c3e50;
+            --light: #f9f9f9;
+            --warning: #f39c12;
+            --danger: #c0392b;
+            --success: #27ae60;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff9f0 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(90deg, var(--danger) 0%, var(--warning) 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 20%);
+            pointer-events: none;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            margin: 0 auto 1.5rem;
+            font-weight: 300;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            padding: 1.2rem 1.5rem;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-item:hover {
+            color: var(--danger);
+        }
+        
+        .nav-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--danger);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-item:hover::after {
+            width: 80%;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 3rem 0;
+        }
+        
+        .section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--danger);
+            margin-bottom: 0.8rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--danger);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .card-img {
+            height: 200px;
+            background: var(--danger);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .card-text {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .card-stats {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--danger);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        /* Charts */
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+        }
+        
+        .chart-wrapper {
+            height: 400px;
+            position: relative;
+        }
+        
+        /* Heatmap */
+        .heatmap-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            height: 500px;
+            position: relative;
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #3498db, #1abc9c, #f1c40f, #e74c3c);
+        }
+        
+        .heatmap-placeholder {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .heatmap-placeholder i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--danger);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--danger);
+            margin-bottom: 10px;
+        }
+        
+        /* Prevention */
+        .prevention-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .prevention-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .prevention-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .prevention-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--danger);
+        }
+        
+        .footer-links a {
+            display: block;
+            color: #ddd;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Thermometer */
+        .thermometer {
+            width: 30px;
+            height: 200px;
+            background: #eee;
+            border-radius: 15px;
+            position: relative;
+            margin: 30px auto;
+            border: 2px solid #ccc;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .mercury {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+            background: linear-gradient(to top, #3498db, #e74c3c);
+            border-radius: 10px;
+            transition: height 1s ease;
+        }
+        
+        .temp-marks {
+            position: absolute;
+            left: -25px;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+        }
+        
+        .temp-mark {
+            position: absolute;
+            left: 0;
+            width: 10px;
+            height: 1px;
+            background: #999;
+        }
+        
+        .temp-label {
+            position: absolute;
+            left: 15px;
+            font-size: 0.7rem;
+            color: #666;
+            transform: translateY(-50%);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        
+        /* Alert Banner */
+        .alert-banner {
+            background: var(--danger);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        /* Interactive Elements */
+        .interactive-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .panel-controls {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .panel-result {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slider-container {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #eee;
+            outline: none;
+        }
+        
+        .temp-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--danger);
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .risk-level {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 8px;
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+    <!-- Alert Banner -->
+    <div class="alert-banner">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>Heatwave Warning: Extreme temperatures expected in Southern Europe this week</span>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <h1><i class="fas fa-fire"></i> Understanding Heatwaves</h1>
+            <p class="subtitle">Learn about the causes, impacts, and prevention of extreme heat events</p>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#definition" class="nav-item">Definition</a>
+            <a href="#causes" class="nav-item">Causes</a>
+            <a href="#impacts" class="nav-item">Impacts</a>
+            <a href="#history" class="nav-item">History</a>
+            <a href="#prevention" class="nav-item">Prevention</a>
+            <a href="#data" class="nav-item">Data</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Heatwave Definition -->
+        <section id="definition" class="section">
+            <div class="section-header">
+                <h2 class="section-title">What is a Heatwave?</h2>
+                <p class="section-subtitle">Understanding the scientific definition and characteristics</p>
+            </div>
+            
+            <div class="card-container">
+                <div class="card animate">
+                    <div class="card-img" style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);">
+                        <i class="fas fa-temperature-high"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Scientific Definition</h3>
+                        <p class="card-text">A heatwave is a period of abnormally hot weather, typically lasting several days or weeks, with temperatures significantly above the long-term average for a region. The World Meteorological Organization defines a heatwave as five or more consecutive days with daily maximum temperatures 5°C above the average maximum temperature.</p>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <div class="stat-value">5+</div>
+                                <div class="stat-label">Duration (days)</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">5°C</div>
+                                <div class="stat-label">Temperature Threshold</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card animate delay-1">
+                    <div class="card-img" style="background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Regional Characteristics</h3>
+                        <p class="card-text">Heatwaves are closely related to geography. Regions under subtropical high pressure (Mediterranean, Southwestern US) are more prone to heatwaves. Urban areas experience more significant impacts due to the "urban heat island" effect. High humidity in coastal areas increases the perceived temperature during heatwaves.</p>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <div class="stat-value">3-5°C</div>
+                                <div class="stat-label">Urban Heat Island</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">60%+</div>
+                                <div class="stat-label">Humidity Impact</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card animate delay-2">
+                    <div class="card-img" style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Health Risks</h3>
+                        <p class="card-text">Heatwaves pose serious threats to human health, causing heat cramps, heat exhaustion, and heatstroke. The elderly, children, people with chronic illnesses, and outdoor workers are particularly vulnerable. The 2003 European heatwave caused over 70,000 deaths, highlighting the lethality of extreme heat.</p>
+                        <div class="card-stats">
+                            <div class="stat">
+                                <div class="stat-value">70K+</div>
+                                <div class="stat-label">European Deaths</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">20%↑</div>
+                                <div class="stat-label">Healthcare Pressure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Causes -->
+        <section id="causes" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Causes of Heatwaves</h2>
+                <p class="section-subtitle">Factors contributing to extreme heat events</p>
+            </div>
+            
+            <div class="chart-container animate">
+                <div class="chart-header">
+                    <h3 class="chart-title">Global Warming and Heatwave Frequency</h3>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="warmingChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="prevention-grid">
+                <div class="prevention-card animate">
+                    <div class="prevention-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Greenhouse Gas Emissions</h3>
+                    <p>Human-produced CO2 and other greenhouse gases cause global temperature rise, increasing heatwave frequency and intensity.</p>
+                </div>
+                
+                <div class="prevention-card animate delay-1">
+                    <div class="prevention-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>Atmospheric Circulation</h3>
+                    <p>Stalled high-pressure systems cause hot air accumulation, with sinking air suppressing cloud formation.</p>
+                </div>
+                
+                <div class="prevention-card animate delay-2">
+                    <div class="prevention-icon">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <h3>Urban Heat Island Effect</h3>
+                    <p>Concrete and asphalt in cities absorb and store heat, making urban areas 3-5°C hotter than surrounding rural areas.</p>
+                </div>
+                
+                <div class="prevention-card animate delay-3">
+                    <div class="prevention-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Reduced Vegetation</h3>
+                    <p>Deforestation and land degradation reduce evaporative cooling, further increasing surface temperatures.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Impacts -->
+        <section id="impacts" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Impacts of Heatwaves</h2>
+                <p class="section-subtitle">Socioeconomic and environmental consequences</p>
+            </div>
+            
+            <div class="heatmap-container animate">
+                <div class="heatmap-placeholder">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Global Heatwave Risk Map</h3>
+                    <p>Areas in red show highest heatwave risk</p>
+                </div>
+            </div>
+            
+            <div class="card-container">
+                <div class="card animate">
+                    <div class="card-content">
+                        <h3 class="card-title">Health Impacts</h3>
+                        <ul style="padding-left: 20px; color: #555; line-height: 1.8;">
+                            <li>Increased risk of heatstroke and exhaustion</li>
+                            <li>Worsening of cardiovascular and respiratory diseases</li>
+                            <li>Significantly higher mortality among elderly</li>
+                            <li>Increased mental health issues</li>
+                            <li>Expanded range of infectious diseases</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card animate delay-1">
+                    <div class="card-content">
+                        <h3 class="card-title">Environmental Impacts</h3>
+                        <ul style="padding-left: 20px; color: #555; line-height: 1.8;">
+                            <li>Exacerbated droughts and wildfires</li>
+                            <li>Accelerated glacial melt and sea level rise</li>
+                            <li>Water shortages and quality deterioration</li>
+                            <li>Biodiversity loss and species migration</li>
+                            <li>Crop failures and food security threats</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card animate delay-2">
+                    <div class="card-content">
+                        <h3 class="card-title">Socioeconomic Impacts</h3>
+                        <ul style="padding-left: 20px; color: #555; line-height: 1.8;">
+                            <li>Reduced labor productivity</li>
+                            <li>Surges in energy demand stressing power grids</li>
+                            <li>Infrastructure damage (roads, rails)</li>
+                            <li>Losses in tourism and agriculture</li>
+                            <li>Increased burden on healthcare systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive Risk Assessment -->
+            <div class="interactive-panel animate">
+                <div class="panel-controls">
+                    <h3><i class="fas fa-calculator"></i> Heatwave Risk Assessment</h3>
+                    <p>Adjust factors to see their impact on heatwave risk:</p>
+                    
+                    <div class="slider-container">
+                        <label for="temp">Temperature (°C): <span id="temp-value">35</span></label>
+                        <input type="range" id="temp" min="30" max="45" value="35">
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label for="humidity">Humidity (%): <span id="humidity-value">50</span></label>
+                        <input type="range" id="humidity" min="30" max="90" value="50">
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label for="duration">Duration (days): <span id="duration-value">3</span></label>
+                        <input type="range" id="duration" min="1" max="10" value="3">
+                    </div>
+                </div>
+                
+                <div class="panel-result">
+                    <div class="temp-display" id="heat-index">35°C</div>
+                    <div class="risk-level" id="risk-level">Moderate Risk</div>
+                    <p style="text-align: center; margin-top: 15px; color: #666;">
+                        <i class="fas fa-info-circle"></i> Heat index combines temperature and humidity to measure perceived heat
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- History -->
+        <section id="history" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Major Historical Heatwaves</h2>
+                <p class="section-subtitle">Significant heat events since the 20th century</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item animate">
+                    <div class="timeline-content">
+                        <div class="timeline-date">1936 - North America</div>
+                        <p>The US Midwest and Canada experienced their deadliest heatwave with temperatures reaching 49°C, lasting nearly two weeks and causing over 5,000 deaths.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate delay-1">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2003 - Europe</div>
+                        <p>Europe experienced its most severe recorded heatwave, with France reaching 44.1°C, resulting in over 70,000 deaths.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate delay-2">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2010 - Russia</div>
+                        <p>Moscow experienced its worst heatwave in 130 years, reaching 38.2°C, causing approximately 56,000 deaths and massive wildfires.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate delay-3">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2019 - Europe</div>
+                        <p>Western European countries broke temperature records: France 46°C, Germany 42.6°C, Netherlands 40.7°C, resulting in 2,500+ deaths.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2021 - North America</div>
+                        <p>British Columbia, Canada recorded 49.6°C - 15°C above normal - causing over 600 sudden deaths.</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate delay-1">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022 - China</div>
+                        <p>China experienced its strongest heatwave since 1961, with 75 weather stations breaking records, causing severe drought in the Yangtze basin.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Prevention -->
+        <section id="prevention" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Prevention & Response</h2>
+                <p class="section-subtitle">Strategies at individual, community and government levels</p>
+            </div>
+            
+            <div class="prevention-grid">
+                <div class="prevention-card animate">
+                    <div class="prevention-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Personal Protection</h3>
+                    <p>Stay hydrated, wear loose light clothing, avoid outdoor activities during peak heat, use cooling systems, monitor weather alerts.</p>
+                </div>
+                
+                <div class="prevention-card animate delay-1">
+                    <div class="prevention-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Community Action</h3>
+                    <p>Establish heat alert systems, create cooling centers, check on vulnerable populations, organize community support networks.</p>
+                </div>
+                
+                <div class="prevention-card animate delay-2">
+                    <div class="prevention-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Urban Cooling</h3>
+                    <p>Increase green spaces, use reflective building materials, implement green roofs and walls, add water features.</p>
+                </div>
+                
+                <div class="prevention-card animate delay-3">
+                    <div class="prevention-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>Long-term Strategies</h3>
+                    <p>Reduce greenhouse emissions, improve building standards, enhance heat-health research, develop emergency response plans.</p>
+                </div>
+            </div>
+            
+            <div class="chart-container animate" style="margin-top: 30px;">
+                <div class="chart-header">
+                    <h3 class="chart-title">Effectiveness of Cooling Strategies</h3>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="preventionChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Data Trends -->
+        <section id="data" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Heatwave Data Trends</h2>
+                <p class="section-subtitle">Long-term changes in frequency, intensity and duration</p>
+            </div>
+            
+            <div class="chart-container animate">
+                <div class="chart-header">
+                    <h3 class="chart-title">Global Heatwave Frequency (1950-2023)</h3>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; margin: 40px 0; flex-wrap: wrap;">
+                <div style="text-align: center; margin: 0 30px 30px;">
+                    <h3 style="color: var(--danger); margin-bottom: 15px;">1950s</h3>
+                    <div class="thermometer">
+                        <div class="mercury" id="mercury-1950" style="height: 70px;"></div>
+                        <div class="temp-marks">
+                            <div class="temp-mark" style="top: 10%;"></div>
+                            <div class="temp-mark" style="top: 30%;"></div>
+                            <div class="temp-mark" style="top: 50%;"></div>
+                            <div class="temp-mark" style="top: 70%;"></div>
+                            <div class="temp-mark" style="top: 90%;"></div>
+                            <div class="temp-label" style="top: 10%;">Low</div>
+                            <div class="temp-label" style="top: 50%;">Medium</div>
+                            <div class="temp-label" style="top: 90%;">High</div>
+                        </div>
+                    </div>
+                    <p>Average annual heatwaves: 12</p>
+                </div>
+                
+                <div style="text-align: center; margin: 0 30px 30px;">
+                    <h3 style="color: var(--danger); margin-bottom: 15px;">2020s</h3>
+                    <div class="thermometer">
+                        <div class="mercury" id="mercury-2020" style="height: 160px;"></div>
+                        <div class="temp-marks">
+                            <div class="temp-mark" style="top: 10%;"></div>
+                            <div class="temp-mark" style="top: 30%;"></div>
+                            <div class="temp-mark" style="top: 50%;"></div>
+                            <div class="temp-mark" style="top: 70%;"></div>
+                            <div class="temp-mark" style="top: 90%;"></div>
+                            <div class="temp-label" style="top: 10%;">Low</div>
+                            <div class="temp-label" style="top: 50%;">Medium</div>
+                            <div class="temp-label" style="top: 90%;">High</div>
+                        </div>
+                    </div>
+                    <p>Average annual heatwaves: 48</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About This Website</h3>
+                    <p>This educational resource provides scientific information about heatwaves and practical guidance for extreme heat events.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <div class="footer-links">
+                        <a href="#"><i class="fas fa-external-link-alt"></i> World Meteorological Organization</a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i> WHO Heatwave Guidance</a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i> Global Climate Change Data</a>
+                        <a href="#"><i class="fas fa-external-link-alt"></i> National Weather Services</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Emergency Contacts</h3>
+                    <p>During heatwave emergencies:</p>
+                    <p><i class="fas fa-phone"></i> Medical Emergency: 112 or 911</p>
+                    <p><i class="fas fa-info-circle"></i> Weather Alerts: Local meteorological service</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Heatwave Information Center | Data Sources: WMO, NOAA, ECMWF | For Educational Purposes</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize charts
+            initCharts();
+            
+            // Setup interactive elements
+            setupInteractive();
+            
+            // Setup scroll animations
+            setupScrollAnimations();
+        });
+        
+        // Initialize charts
+        function initCharts() {
+            // Global warming and heatwave frequency
+            const warmingCtx = document.getElementById('warmingChart').getContext('2d');
+            new Chart(warmingCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1880', '1900', '1920', '1940', '1960', '1980', '2000', '2020'],
+                    datasets: [{
+                        label: 'Global Temperature Anomaly (°C)',
+                        data: [-0.2, -0.1, 0.0, 0.1, 0.2, 0.4, 0.7, 1.1],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }, {
+                        label: 'Heatwave Frequency Index',
+                        data: [10, 12, 15, 18, 25, 45, 75, 120],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+            
+            // Heatwave trend chart
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            new Chart(trendCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s'],
+                    datasets: [{
+                        label: 'Global Heatwaves (annual average)',
+                        data: [12, 15, 18, 22, 28, 35, 42, 48],
+                        backgroundColor: 'rgba(231, 76, 60, 0.7)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: { display: true, text: 'Annual Heatwave Events' }
+                        }
+                    }
+                }
+            });
+            
+            // Prevention strategies chart
+            const preventionCtx = document.getElementById('preventionChart').getContext('2d');
+            new Chart(preventionCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Cooling Effect', 'Cost Efficiency', 'Implementation', 'Applicability', 'Environment', 'Health Benefits'],
+                    datasets: [{
+                        label: 'Urban Greening',
+                        data: [85, 75, 60, 70, 95, 80],
+                        fill: true,
+                        backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                        borderColor: 'rgb(46, 204, 113)',
+                        pointBackgroundColor: 'rgb(46, 204, 113)'
+                    }, {
+                        label: 'Reflective Materials',
+                        data: [70, 85, 80, 65, 50, 65],
+                        fill: true,
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: 'rgb(52, 152, 219)',
+                        pointBackgroundColor: 'rgb(52, 152, 219)'
+                    }, {
+                        label: 'Water Features',
+                        data: [90, 60, 50, 40, 85, 75],
+                        fill: true,
+                        backgroundColor: 'rgba(155, 89, 182, 0.2)',
+                        borderColor: 'rgb(155, 89, 182)',
+                        pointBackgroundColor: 'rgb(155, 89, 182)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { suggestedMin: 0, suggestedMax: 100 } }
+                }
+            });
+        }
+        
+        // Setup interactive elements
+        function setupInteractive() {
+            // Slider functionality
+            const tempSlider = document.getElementById('temp');
+            const humiditySlider = document.getElementById('humidity');
+            const durationSlider = document.getElementById('duration');
+            
+            const tempValue = document.getElementById('temp-value');
+            const humidityValue = document.getElementById('humidity-value');
+            const durationValue = document.getElementById('duration-value');
+            
+            const heatIndexDisplay = document.getElementById('heat-index');
+            const riskLevelDisplay = document.getElementById('risk-level');
+            
+            // Update slider values
+            function updateValues() {
+                tempValue.textContent = tempSlider.value;
+                humidityValue.textContent = humiditySlider.value;
+                durationValue.textContent = durationSlider.value;
+                
+                // Calculate heat index (simplified)
+                const temp = parseFloat(tempSlider.value);
+                const humidity = parseFloat(humiditySlider.value);
+                const duration = parseFloat(durationSlider.value);
+                
+                // Simplified heat index formula
+                const heatIndex = temp + 0.05 * humidity;
+                
+                // Determine risk level
+                let riskLevel = "";
+                let riskColor = "";
+                
+                if (heatIndex < 32) {
+                    riskLevel = "Low Risk";
+                    riskColor = "#27ae60";
+                } else if (heatIndex < 41) {
+                    riskLevel = "Moderate Risk";
+                    riskColor = "#f39c12";
+                } else if (heatIndex < 54) {
+                    riskLevel = "High Risk";
+                    riskColor = "#e74c3c";
+                } else {
+                    riskLevel = "Extreme Risk";
+                    riskColor = "#c0392b";
+                }
+                
+                // Apply extra risk for longer durations
+                if (duration > 5) {
+                    riskLevel += " (Prolonged)";
+                } else if (duration > 3) {
+                    riskLevel += " (Extended)";
+                }
+                
+                // Update display
+                heatIndexDisplay.textContent = heatIndex.toFixed(1) + "°C";
+                heatIndexDisplay.style.color = riskColor;
+                riskLevelDisplay.textContent = riskLevel;
+                riskLevelDisplay.style.background = riskColor;
+                riskLevelDisplay.style.color = "white";
+            }
+            
+            // Add event listeners
+            tempSlider.addEventListener('input', updateValues);
+            humiditySlider.addEventListener('input', updateValues);
+            durationSlider.addEventListener('input', updateValues);
+            
+            // Initialize values
+            updateValues();
+        }
+        
+        // Setup scroll animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.section, .card, .prevention-card, .timeline-item').forEach(el => {
+                observer.observe(el);
+            });
+        }
+    </script>
+</body>
+</html>
